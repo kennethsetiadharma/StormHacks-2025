@@ -33,9 +33,11 @@ def root():
 @app.get("/courses")
 def get_courses(token: str = Query(...)):
     headers = {"Authorization": f"Bearer {token}"}
-    url = f"{CANVAS_BASE_URL}/users/self/courses"
+    # Only fetch courses where the user is currently enrolled
+    url = f"{CANVAS_BASE_URL}/users/self/courses?enrollment_state=active"
     response = requests.get(url, headers=headers)
     return response.json()
+
 
 # ----------------------------
 # Get assignments for a specific course
