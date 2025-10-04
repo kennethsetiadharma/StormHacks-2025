@@ -57,7 +57,7 @@ function TokenModal({ setToken }) {
             value={inputToken}
             onChange={e => setInputToken(e.target.value)}
             placeholder="Your Canvas API Token"
-            style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem', color: 'black' }}
+            style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem', color: 'black', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' }}
           />
           <button type="submit" style={{ width: '100%', padding: '0.5rem', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '0.25rem' }}>
             Submit
