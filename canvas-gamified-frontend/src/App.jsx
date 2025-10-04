@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "./App.css";
 
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem("canvasToken") || "");
@@ -60,46 +61,108 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1>Canvas Gamified Dashboard</h1>
-      <div style={{ marginBottom: "1rem" }}>
-        <input
-          type="text"
-          placeholder="Enter Canvas API token"
-          value={token}
-          onChange={(e) => setToken(e.target.value)}
-          style={{ width: "400px", marginRight: "1rem" }}
-        />
-        <button onClick={fetchCourses}>Fetch Data</button>
+    <div className="app">
+      <div className="container">
+        {/* Left Column - Features */}
+        <div className="left-column">
+          <h1 className="title">Welcome to Canvas Tracker</h1>
+          <p className="subtitle">
+            Transform your Canvas experience with gamified learning. Track assignments,  
+            compete with classmates, and build study streaks.
+          </p>
+
+          <div className="features">
+            <div className="feature-card">
+              <div className="feature-icon">🔒</div>
+              <div className="feature-content">
+                <h3>Secure Integration</h3>
+                <p>Your Canvas token is encrypted and securely stored. Only your classes are accessible.</p>
+              </div>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">📊</div>
+              <div className="feature-content">
+                <h3>Track Progress</h3>
+                <p>Real-time sync with Canvas. Monitor assignments, grades, and build study streaks.</p>
+              </div>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">🏆</div>
+              <div className="feature-content">
+                <h3>Class Leaderboards</h3>
+                <p>Compete with verified classmates. Rankings based on completion and performance.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - Token Input */}
+        <div className="right-column">
+          <div className="token-card">
+            <h2>Canvas Access Token</h2>
+            <p className="token-instructions">
+              Enter your Canvas API token
+            </p>
+            <p className="token-help">
+              Find your token in Canvas → Account → Settings → New Access Token
+            </p>
+            
+            <div className="token-input-group">
+              <input
+                type="text"
+                placeholder="Enter your Canvas API token"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+                className="token-input"
+              />
+              <button onClick={fetchCourses} className="connect-button">
+                Connect to Canvas
+              </button>
+            </div>
+
+            {error && <p className="error-message">{error}</p>}
+          </div>
+        </div>
       </div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
+      {/* Data Display Section */}
       {courses.length > 0 && (
-        <>
-          <h2>Courses & Assignments</h2>
-          {courses.map((course) => (
-            <div key={course.id} style={{ marginBottom: "1rem" }}>
-              <h3>{course.name}</h3>
-              <ul>
-                {assignments[course.id]?.map((a) => (
-                  <li key={a.id}>
-                    {a.name} - Due: {a.due_at || "N/A"}
-                  </li>
-                ))}
-              </ul>
+        <div className="data-section">
+          <div className="courses-section">
+            <h2>Courses & Assignments</h2>
+            <div className="courses-grid">
+              {courses.map((course) => (
+                <div key={course.id} className="course-card">
+                  <h3>{course.name}</h3>
+                  <div className="assignments-list">
+                    {assignments[course.id]?.map((a) => (
+                      <div key={a.id} className="assignment-item">
+                        <span className="assignment-name">{a.name}</span>
+                        <span className="assignment-due">
+                          Due: {a.due_at ? new Date(a.due_at).toLocaleDateString() : "N/A"}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
 
-          <h2>Leaderboard (Assignments per Course)</h2>
-          <ul>
-            {Object.entries(leaderboard).map(([courseName, count]) => (
-              <li key={courseName}>
-                {courseName}: {count} assignments
-              </li>
-            ))}
-          </ul>
-        </>
+          <div className="leaderboard-section">
+            <h2>Class Leaderboard</h2>
+            <div className="leaderboard">
+              {Object.entries(leaderboard).map(([courseName, count]) => (
+                <div key={courseName} className="leaderboard-item">
+                  <span className="course-name">{courseName}</span>
+                  <span className="assignment-count">{count} assignments</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
