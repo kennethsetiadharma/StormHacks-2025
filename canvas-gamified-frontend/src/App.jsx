@@ -91,7 +91,7 @@ function App() {
         }
       }
 
-      // DYNAMIC CURRENT COURSES - include all active courses from Canvas
+      // Make sure to include all active courses from Canvas
       const currentCourses = res.data.filter(course => {
         const courseName = course.name || '';
         const courseCode = course.course_code || '';
