@@ -218,7 +218,7 @@ function App() {
         <div className="container">
           {/* Left Column - Features */}
           <div className="left-column">
-            <h1 className="title">Welcome to Canvas Tracker</h1>
+            <h1 className="title">Welcome to CanvasFlow</h1>
             <p className="subtitle">
               Transform your Canvas experience with gamified learning. Track assignments,  
               compete with classmates, and build study streaks.
@@ -294,7 +294,7 @@ function App() {
       {/* Header */}
       <header className="dashboard-header">
         <div className="header-content">
-          <h1>Canvas Tracker</h1>
+          <h1>CanvasFlow</h1>
           <div className="header-info">
             <span className="enrollment-badge">
               📚 {courses.length} Current Courses
@@ -487,95 +487,215 @@ function App() {
         {/* Leaderboard Tab */}
         {activeTab === "leaderboard" && (
           <div className="tab-panel">
-            <h2>Current Class Leaderboard</h2>
+            <h2>Early Submission Leaderboard</h2>
             <div className="enrollment-notice">
-              <p>🏆 Rankings based on grades and assignment completion in your <strong>{courses.length} current courses</strong></p>
+              <p>🏆 Rankings based on points earned from submitting assignments early</p>
+              <p className="points-system">Points System: +10 early submission, +5 on time, +0 late</p>
             </div>
             
-            {Object.entries(leaderboard).length === 0 ? (
-              <div className="no-data">
-                <p>No leaderboard data available for your current courses.</p>
-              </div>
-            ) : (
-              <div className="leaderboard">
-                {Object.entries(leaderboard)
-                  .sort(([,a], [,b]) => {
-                    // Sort by grade percentage first, then by assignment count
-                    const gradeA = parseFloat(a.gradePercentage) || 0;
-                    const gradeB = parseFloat(b.gradePercentage) || 0;
-                    if (gradeA !== gradeB) return gradeB - gradeA;
-                    return b.assignmentCount - a.assignmentCount;
-                  })
-                  .map(([courseName, courseData], index) => (
-                    <div key={courseName} className="leaderboard-item">
-                      <div className="rank">#{index + 1}</div>
-                      <div className="course-info">
-                        <span className="course-name">{courseName}</span>
-                        <div className="course-details">
-                          <span className="assignment-count">{courseData.assignmentCount} assignments</span>
-                          <span className="graded-count">({courseData.gradedCount} graded)</span>
-                        </div>
-                      </div>
-                      <div className="grade-info">
-                        {courseData.gradePercentage ? (
-                          <div className="grade-display">
-                            <span className="grade-percentage">{courseData.gradePercentage}%</span>
-                            <span className="average-grade">Avg: {courseData.averageGrade}%</span>
-                          </div>
-                        ) : (
-                          <span className="no-grades">No grades</span>
-                        )}
+            <div className="leaderboard">
+              {[
+                {
+                  studentName: "Alex Chen",
+                  points: 285,
+                  assignmentsSubmitted: 28,
+                  earlySubmissions: 25,
+                  onTimeSubmissions: 3,
+                  lateSubmissions: 0,
+                  isCurrentUser: false
+                },
+                {
+                  studentName: "You",
+                  points: 270,
+                  assignmentsSubmitted: 27,
+                  earlySubmissions: 22,
+                  onTimeSubmissions: 5,
+                  lateSubmissions: 0,
+                  isCurrentUser: true
+                },
+                {
+                  studentName: "Maya Rodriguez",
+                  points: 255,
+                  assignmentsSubmitted: 26,
+                  earlySubmissions: 20,
+                  onTimeSubmissions: 6,
+                  lateSubmissions: 0,
+                  isCurrentUser: false
+                },
+                {
+                  studentName: "Jordan Smith",
+                  points: 230,
+                  assignmentsSubmitted: 25,
+                  earlySubmissions: 17,
+                  onTimeSubmissions: 7,
+                  lateSubmissions: 1,
+                  isCurrentUser: false
+                },
+                {
+                  studentName: "Taylor Kim",
+                  points: 210,
+                  assignmentsSubmitted: 24,
+                  earlySubmissions: 15,
+                  onTimeSubmissions: 7,
+                  lateSubmissions: 2,
+                  isCurrentUser: false
+                },
+                {
+                  studentName: "Riley Johnson",
+                  points: 185,
+                  assignmentsSubmitted: 23,
+                  earlySubmissions: 12,
+                  onTimeSubmissions: 8,
+                  lateSubmissions: 3,
+                  isCurrentUser: false
+                },
+                {
+                  studentName: "Sam Wilson",
+                  points: 150,
+                  assignmentsSubmitted: 22,
+                  earlySubmissions: 9,
+                  onTimeSubmissions: 9,
+                  lateSubmissions: 4,
+                  isCurrentUser: false
+                },
+                {
+                  studentName: "Casey Brown",
+                  points: 125,
+                  assignmentsSubmitted: 21,
+                  earlySubmissions: 7,
+                  onTimeSubmissions: 8,
+                  lateSubmissions: 6,
+                  isCurrentUser: false
+                }
+              ]
+                .sort((a, b) => b.points - a.points)
+                .map((student, index) => (
+                  <div key={student.studentName} className={`leaderboard-item ${student.isCurrentUser ? 'current-user' : ''}`}>
+                    <div className="rank">
+                      #{index + 1}
+                      {index === 0 && <span className="top-badge">👑</span>}
+                    </div>
+                    <div className="course-info">
+                      <span className={`course-name ${student.isCurrentUser ? 'user-highlight' : ''}`}>
+                        {student.studentName}
+                        {student.isCurrentUser && <span className="you-badge"> (You)</span>}
+                      </span>
+                      <div className="course-details">
+                        <span className="assignment-count">
+                          {student.assignmentsSubmitted} assignments • 
+                          <span className="early-count"> {student.earlySubmissions} early</span> • 
+                          <span className="ontime-count"> {student.onTimeSubmissions} on time</span>
+                          {student.lateSubmissions > 0 && (
+                            <span className="late-count"> • {student.lateSubmissions} late</span>
+                          )}
+                        </span>
                       </div>
                     </div>
-                  ))}
-              </div>
-            )}
+                    <div className="grade-info">
+                      <div className="points-display">
+                        <span className="points">{student.points} pts</span>
+                        <span className="points-breakdown">
+                          
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
         )}
 
         {/* Streaks Tab */}
         {activeTab === "streaks" && (
           <div className="tab-panel">
-            <h2>Study Streaks - Current Semester</h2>
-            <div className="enrollment-notice">
-              <p>🔥 Track your study habits across <strong>{courses.length} current courses</strong></p>
-            </div>
-            
-            <div className="streaks-container">
-              <div className="streak-card">
-                <h3>Current Streak</h3>
-                <div className="streak-display">
-                  <span className="streak-number">7</span>
-                  <span className="streak-label">days 🔥</span>
-                </div>
-                <p>Consistent studying across your courses!</p>
+              <h2>Submission Streaks - Current Semester</h2>
+              <div className="enrollment-notice">
+                  <p>🔥 Maintain your streak by submitting assignments early or on time</p>
+                  <p className="streak-rules">Streak continues when you submit early/on-time on due dates • No penalty for days without assignments</p>
               </div>
               
-              <div className="streak-calendar">
-                <h3>Grade Progress</h3>
-                <div className="grade-progress">
-                  {courses.map(course => {
-                    const gradePercentage = calculateGradePercentage(course.id);
-                    return (
-                      <div key={course.id} className="course-progress">
-                        <span className="progress-course">{course.name}</span>
-                        {gradePercentage ? (
-                          <div className="progress-bar">
-                            <div 
-                              className="progress-fill"
-                              style={{ width: `${gradePercentage}%` }}
-                            ></div>
-                            <span className="progress-text">{gradePercentage}%</span>
-                          </div>
-                        ) : (
-                          <span className="no-progress">No grades yet</span>
-                        )}
+              <div className="streaks-container">
+                  <div className="streak-card">
+                      <h3>Current Submission Streak</h3>
+                      <div className="streak-display">
+                          <span className="streak-number">8</span>
+                          <span className="streak-label">assignments 🔥</span>
                       </div>
-                    );
-                  })}
-                </div>
+                      <p className="streak-details">
+                          <span className="streak-stat">Early: <strong>6 </strong></span>
+                          <span className="streak-stat">On-Time: <strong>2 </strong></span>
+                          <span className="streak-stat">Total Points: <strong>70</strong></span>
+                      </p>
+                      <div className="streak-info">
+                          <p>✅ Last submission: <strong>2 days ago</strong> (Early)</p>
+                          <p>📅 Next assignment due: <strong>Tomorrow</strong></p>
+                      </div>
+                  </div>
+                  
+                <div className="streak-card achievement-card">
+                      <h3>Streak Achievements</h3>
+                      <div className="achievements-list">
+                          <div className="achievement unlocked">
+                              <span className="achievement-icon">🔥</span>
+                              <div className="achievement-info">
+                                  <span className="achievement-title">Consistent Starter</span>
+                                  <span className="achievement-desc">5 assignments in a row</span>
+                              </div>
+                              <span className="achievement-date">Active</span>
+                          </div>
+                          <div className="achievement unlocked">
+                              <span className="achievement-icon">⚡</span>
+                              <div className="achievement-info">
+                                  <span className="achievement-title">Early Bird</span>
+                                  <span className="achievement-desc">3 early submissions in a row</span>
+                              </div>
+                              <span className="achievement-date">Active</span>
+                          </div>
+                          <div className="achievement locked">
+                              <span className="achievement-icon">🏆</span>
+                              <div className="achievement-info">
+                                  <span className="achievement-title">Perfect Month</span>
+                                  <span className="achievement-desc">15 assignments streak</span>
+                              </div>
+                              <span className="achievement-progress">8/15</span>
+                          </div>
+                          <div className="achievement locked">
+                              <span className="achievement-icon">💎</span>
+                              <div className="achievement-info">
+                                  <span className="achievement-title">Early Master</span>
+                                  <span className="achievement-desc">10 early submissions in a row</span>
+                              </div>
+                              <span className="achievement-progress">6/10</span>
+                          </div>
+                      </div>
+
+                      <div className="streak-card">
+                        <h3>Upcoming Assignments</h3>
+                      <div className="upcoming-assignments">
+                          {[
+                              { assignment: "Final Project Proposal", due: "Tomorrow", course: "Computer Science", points: 10 },
+                              { assignment: "Chapter 5 Problems", due: "In 3 days", course: "Mathematics", points: 10 },
+                              { assignment: "Literature Analysis", due: "In 5 days", course: "English", points: 10 },
+                              { assignment: "Lab Experiment", due: "In 6 days", course: "Physics", points: 10 },
+                          ].map((assignment, index) => (
+                              <div key={index} className="upcoming-item">
+                                  <div className="upcoming-info">
+                                      <span className="upcoming-name">{assignment.assignment}</span>
+                                      <span className="upcoming-course">{assignment.course}</span>
+                                  </div>
+                                  <div className="upcoming-due">
+                                      <span className="due-date">{assignment.due}</span>
+                                    
+                                  </div>
+                              </div>
+                          ))}
+                      </div>
+                      <p className="upcoming-total">Keep your streak going! Submit early for bonus points.</p>
+                  </div>
+
+                  
+                  </div>
               </div>
-            </div>
           </div>
         )}
 
