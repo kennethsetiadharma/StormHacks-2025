@@ -237,7 +237,7 @@ function App() {
                 <div className="feature-icon">📊</div>
                 <div className="feature-content">
                   <h3>Current Courses Only</h3>
-                  <p>We only show data for the 3 courses you're actively enrolled in this semester.</p>
+                  <p>We show data for courses you're actively enrolled in this semester.</p>
                 </div>
               </div>
 
