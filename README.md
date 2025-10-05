@@ -82,10 +82,16 @@ Data Transformation: Techniques for normalizing inconsistent API responses into 
 
 ## What's next for CanvasFlow
 
-Peer Comparison (Anonymous): "You're in the top 20% of the class" without revealing identities
-
 Study Group Integration: Connect with classmates for collaborative learning
 
 Assignment Calendar Sync: Export deadlines to Google Calendar/Outlook
 
 Mobile App: React Native version for on-the-go access
+
+Multi-Institution Support: Expand beyond SFU Canvas to other universities
+
+AI-Powered Insights: Machine learning to predict struggling students early
+
+Integration with Other LMS: Blackboard, Moodle, and D2L support
+
+Productivity Features: Pomodoro timer integration and focus tracking
