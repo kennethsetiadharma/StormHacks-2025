@@ -218,7 +218,7 @@ function App() {
         <div className="container">
           {/* Left Column - Features */}
           <div className="left-column">
-            <h1 className="title">Welcome to Canvas Flow</h1>
+            <h1 className="title">Welcome to CanvasFlow</h1>
             <p className="subtitle">
               Transform your Canvas experience with gamified learning. Track assignments,  
               compete with classmates, and build study streaks.
@@ -294,7 +294,7 @@ function App() {
       {/* Header */}
       <header className="dashboard-header">
         <div className="header-content">
-          <h1>Canvas Flow</h1>
+          <h1>CanvasFlow</h1>
           <div className="header-info">
             <span className="enrollment-badge">
               📚 {courses.length} Current Courses
