@@ -91,18 +91,15 @@ function App() {
         }
       }
 
-      // STRICT MANUAL SELECTION - Only include your 3 current courses
+      // DYNAMIC CURRENT COURSES - include all active courses from Canvas
       const currentCourses = res.data.filter(course => {
         const courseName = course.name || '';
         const courseCode = course.course_code || '';
         
         console.log(`Checking course: "${courseName}" (${courseCode})`);
         
-        // ONLY include these exact courses you're currently enrolled in
-        const isCurrentCourse = 
-          courseName.includes('CMPT225') ||
-          courseName.includes('GSWS100') || 
-          courseName.includes('HUM130');
+        // Include all courses returned by Canvas API (active enrollment)
+        const isCurrentCourse = true; // keep all courses
         
         console.log(`Is current course: ${isCurrentCourse}`);
         return isCurrentCourse;
