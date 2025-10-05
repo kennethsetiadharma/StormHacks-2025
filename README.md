@@ -95,3 +95,46 @@ AI-Powered Insights: Machine learning to predict struggling students early
 Integration with Other LMS: Blackboard, Moodle, and D2L support
 
 Productivity Features: Pomodoro timer integration and focus tracking
+
+# CanvasFlow Quick Starting
+
+### Prerequisites
+- Python 3.8+
+- Node.js 16+
+- A Canvas account with API access
+
+### 1. Get Your Canvas API Token
+1. Log into your Canvas account
+2. Go to **Account → Settings**
+3. Scroll down to **Approved Integrations**
+4. Click **New Access Token**
+5. Copy your token (keep it secure!)
+
+### 2. Backend Setup
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd canvasflow
+
+# Set up Python environment
+python -m venv venv
+
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+### 3. Frontend Setup
+
+# Open a new terminal window
+cd canvasflow
+
+# Install dependencies
+npm install
+
+# Start the frontend
+npm run dev
+

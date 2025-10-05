@@ -7,7 +7,12 @@ CANVAS_BASE_URL = "https://canvas.sfu.ca/api/v1"
 app = FastAPI()
 
 # Enable CORS for React frontend
-origins = ["http://localhost:5174"]  # local host port may change 
+origins = [
+    "http://localhost:5174",    # common ports
+    "http://localhost:5174",
+    "http://localhost:3000",
+    "http://localhost:8080",
+    ]  # local host port may change 
 
 app.add_middleware(
     CORSMiddleware,
